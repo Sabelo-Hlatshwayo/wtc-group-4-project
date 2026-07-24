@@ -66,7 +66,27 @@ def knight_moves(board, row, col):
     
         return moves
     
-print(knight_moves(board, 1, 1))
+def king_moves(board, row, col):
+    moves = []
+    piece = board[row][col]
+    is_white_piece = is_white(piece)
+    
+    # The king moves in 8 directions
+    king_movement = [
+        (-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1),  (1, 0), (1, 1)]
+    
+    for r, c in king_movement:
+        new_row = row + r
+        new_col = col + c
+        
+        if is_within(new_row, new_col):
+            target = board[new_row][new_col]
+            if target == '.' or is_white_piece != is_white(target):
+                moves.append(((row, col), (new_row, new_col)))
+    
+    return moves
+    
+print(king_moves(board, 5, 5))
 
 def display_chess_board(board):
     length_of_row = len(board[0])
