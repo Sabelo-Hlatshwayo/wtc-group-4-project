@@ -28,4 +28,17 @@ def generate_moves(board):
 def apply_move(board, move):
     raise NotImplementedError("This function is not implemented yet.")
 
- 
+def display_chess_board(board):
+    length_of_row = len(board[0])
+    
+    for row in board:
+        print(length_of_row, end=" ")
+        length_of_row -= 1
+        for piece in row:
+            print(piece, end=" ")
+        print()
+        
+    print("\n a b c d e f g h")
+    
+display_chess_board(board)
+    
