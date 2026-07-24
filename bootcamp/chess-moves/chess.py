@@ -156,6 +156,46 @@ def generate_sliding_moves(board, row, col, directions):
 
 # print(generate_sliding_moves(board, -1, 2, [(1,2), (-1,2)]))
 
+# Generate all the permissable moves for the current player.
+# Returned as a list of moves in format: ((from_row, from_col), (to_row, to_col))
+def generate_moves(board, to_move):
+    moves = []
+    
+    # Determine which color pieces to move
+    if to_move == 'w':
+        piece_color = is_white
+    else:
+        piece_color = is_black
+    
+    for row in range(8):
+        for col in range(8):
+            piece = board[row][col]
+            if piece == '.' or not piece_color(piece):
+                continue
+             
+            # Generate moves based on piece type
+            piece_type = piece.upper()
+            if piece_type == 'P':
+                moves.extend(pawn_moves(board, row, col))
+            elif piece_type == 'N':
+                moves.extend(knight_moves(board, row, col))
+            elif piece_type == 'B':
+                moves.extend(generate_sliding_moves(board, row, col, 
+                                                   [(-1, -1), (-1, 1), (1, -1), (1, 1)]))
+            elif piece_type == 'R':
+                moves.extend(generate_sliding_moves(board, row, col,
+                                                   [(-1, 0), (1, 0), (0, -1), (0, 1)]))
+            elif piece_type == 'Q':
+                moves.extend(generate_sliding_moves(board, row, col,
+                                                   [(-1, -1), (-1, 1), (1, -1), (1, 1),
+                                                    (-1, 0), (1, 0), (0, -1), (0, 1)]))
+            elif piece_type == 'K':
+                moves.extend(king_moves(board, row, col))
+    
+    return moves
+
+# print(generate_moves(board, "w"))
+
 # This function displays the chess board as a tw-dimensional grid
 def display_chess_board(board):
     length_of_row = len(board[0])
