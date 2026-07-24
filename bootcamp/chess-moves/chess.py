@@ -28,6 +28,9 @@ def generate_moves(board):
 def apply_move(board, move):
     raise NotImplementedError("This function is not implemented yet.")
 
+# Return True if the piece is white
+# Return False if the piece is black
+# Otherwise return None when empty 
 def is_white(piece):
     if piece == ".":
         return None
@@ -35,7 +38,7 @@ def is_white(piece):
  
 # Return True if the piece is black
 # Return False if the piece is white
-# Otherwise return None  when empty 
+# Otherwise return None when empty 
 def is_black(piece):
     if piece == '.':
         return None
@@ -45,7 +48,7 @@ def is_black(piece):
 def is_within(row, col):
     return 0 <= row <= 7 and 0 <= col <= 7
 
-
+# This function governs the movement of the knight piece
 def knight_moves(board, row, col):
         moves = []
         is_white_piece = is_white(board[6][6])
@@ -65,7 +68,8 @@ def knight_moves(board, row, col):
                     moves.append(((row, col), (new_r, new_c)))
     
         return moves
-    
+
+# This function governs the movement of the king piece    
 def king_moves(board, row, col):
     moves = []
     piece = board[row][col]
@@ -85,9 +89,47 @@ def king_moves(board, row, col):
                 moves.append(((row, col), (new_row, new_col)))
     
     return moves
-    
-print(king_moves(board, 5, 5))
 
+# This function governs the movement of the pawn piece 
+def pawn_moves(board, row, col):
+    moves = []
+    piece = board[row][col]
+    
+    if is_white(piece):
+        # White pawns move up
+        #  Decreasing row, hence a direction of -1
+        direction = -1
+        start_row = 6
+        enemy_color = is_black
+    else:
+        # Black pawns move down 
+        # Increasing row, hence a direction of 1
+        direction = 1
+        start_row = 1
+        enemy_color = is_white
+        
+        # Move forward one square
+    if is_within(row + direction, col) and board[row + direction][col] == '.':
+        moves.append(((row, col), (row + direction, col)))
+        
+        # Move forward two squares from starting position
+        if row == start_row and board[row + 2 * direction][col] == '.':
+            moves.append(((row, col), (row + 2 * direction, col)))
+            
+     # Diagonal captures
+    for c in [-1, 1]:  # Left and right diagonals
+        new_row = row + direction
+        new_col = col + c
+        if is_within(new_row, new_col):
+            target = board[new_row][new_col]
+            if target != '.' and enemy_color(target):
+                moves.append(((row, col), (new_row, new_col)))
+    
+    return moves
+    
+# print(pawn_moves(board, -1, 2))
+
+# This function displays the chess board as a tw-dimensional grid
 def display_chess_board(board):
     length_of_row = len(board[0])
     
@@ -100,4 +142,5 @@ def display_chess_board(board):
         
     print("\n a b c d e f g h")
     
+# display_chess_board(board)
     
