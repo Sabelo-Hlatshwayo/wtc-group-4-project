@@ -17,7 +17,7 @@ def parse_fen(fen):
         
     return fen_pieces, to_move, castling_rights, ep, int(hm), int(fm), pieces
 
-board = parse_fen("rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1")[-1]
+board = parse_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")[-1]
 # print(board)
 
 
