@@ -129,6 +129,33 @@ def pawn_moves(board, row, col):
     
 # print(pawn_moves(board, -1, 2))
 
+ # This function governs the movement of the pieces that can only move in the sliding pattern
+ # These are the rook, bishop, and the queen
+def generate_sliding_moves(board, row, col, directions):
+    moves = []
+    piece = board[row][col]
+    is_white_piece = is_white(piece)
+    
+    for dr, dc in directions:
+        for step in range(1, 8):
+            new_row, new_col = row + dr * step, col + dc * step
+            if not is_within(new_row, new_col):
+                break
+                
+            target = board[new_row][new_col]
+            if target == '.':
+                moves.append(((row, col), (new_row, new_col)))
+            elif is_white_piece != is_white(target):
+                # Can capture enemy piece
+                moves.append(((row, col), (new_row, new_col)))
+                break  # Can't move past a piece
+            else:
+                break  # Blocked by own piece
+    
+    return moves
+
+# print(generate_sliding_moves(board, -1, 2, [(1,2), (-1,2)]))
+
 # This function displays the chess board as a tw-dimensional grid
 def display_chess_board(board):
     length_of_row = len(board[0])
