@@ -28,6 +28,46 @@ def generate_moves(board):
 def apply_move(board, move):
     raise NotImplementedError("This function is not implemented yet.")
 
+def is_white(piece):
+    if piece == ".":
+        return None
+    return piece.isupper()
+ 
+# Return True if the piece is black
+# Return False if the piece is white
+# Otherwise return None  when empty 
+def is_black(piece):
+    if piece == '.':
+        return None
+    return piece.islower()
+
+# Check if position is within bounds   
+def is_within(row, col):
+    return 0 <= row <= 7 and 0 <= col <= 7
+
+
+def knight_moves(board, row, col):
+        moves = []
+        is_white_piece = is_white(board[6][6])
+        
+        # Knight L-shaped moves
+        knight_movement = [(-2, -1), (-2, 1), (-1, -2), (-1, 2), (1, -2), (1, 2), (2, -1), (2, 1)]
+        
+        for r, c in knight_movement:
+            new_r = row + r
+            new_c = col + c
+            
+            if is_within(new_r, new_c):
+                target = board[new_r][new_c]
+                # Move to empty square 
+                # Or capture opponent's piece
+                if target == '.' or is_white_piece != is_white(target):
+                    moves.append(((row, col), (new_r, new_c)))
+    
+        return moves
+    
+print(knight_moves(board, 1, 1))
+
 def display_chess_board(board):
     length_of_row = len(board[0])
     
@@ -40,5 +80,4 @@ def display_chess_board(board):
         
     print("\n a b c d e f g h")
     
-display_chess_board(board)
     
