@@ -6,7 +6,7 @@ def parse_fen(fen):
     pieces = [[]] 
     
     # This logic creates the chess board
-    for char in fen:
+    for char in fen_pieces:
         if char.isdigit():
             pieces[-1].extend(["*"] * int(char))
         elif char == "/":
@@ -17,7 +17,7 @@ def parse_fen(fen):
         
     return fen_pieces, to_move, castling_rights, ep, int(hm), int(fm), pieces
 
-# board = parse_fen("rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1")[-1]
+board = parse_fen("rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1")[-1]
 # print(board)
 
 
@@ -27,3 +27,5 @@ def generate_moves(board):
 
 def apply_move(board, move):
     raise NotImplementedError("This function is not implemented yet.")
+
+ 
